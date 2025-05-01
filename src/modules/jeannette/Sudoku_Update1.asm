@@ -1,9 +1,10 @@
-# CS 2640 - 12pm
-# Final Project - Sudoku in MIPS
+# PrintBoard.asm
+# Authors: Jeannette
+# CS2640.02 Assembly
 
-# Tasks:
-#	[X}: Print Board
-#	[X}: Get user input
+# Print board and menu
+# Get user input and print the board with the updated value
+# ============================================================================================
 
 
 .data
