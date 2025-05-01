@@ -1,21 +1,20 @@
-# MIPS Sudoku Generator (Simplified)
-# MARS simulator compatible
-# This version creates a partially-filled 9x9 grid with random numbers that
-# don't repeat in rows. No full Sudoku solving logic (e.g., backtracking) is included.
+# Alexander Albert
+# generate a random, legal sudoku board
+
 
 .data
 grid:         .space 324          # 9x9 integers = 81 * 4 = 324 bytes
 newline:      .asciiz "\n"
 tab:          .asciiz "\t"
-seed:         .word 12345         # initial seed for RNG
+seed:         .word 12345         # initial placeholder, this is the seed for RNG
 
 .text
-.globl main
-
-main:
+generate:
     # Initialize random seed
-    li $t0, 12345
-    sw $t0, seed
+    li $v0, 30       # syscall 30: get time in ms
+    syscall
+    la $t0, seed
+    sw $a0, 0($t0)   # store time as new seed
 
     # Fill each row with random values 1–9 without duplicates
     li $t1, 0                  # row index (0–8)
