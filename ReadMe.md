@@ -7,14 +7,13 @@ This is a Sudoku game implemented in MIPS assembly language.
 ---
 
 ## Authors
-Alexander Albert
-  @AlexanderRA07
-Jeannette Ruiz
-  @jeanrnette
-Miguelangel Soria Morelos
-  @miguelondigital
-Moose Brown
-  @dol-onia
+Alexander Albert: @AlexanderRA07
+  
+Jeannette Ruiz: @jeanrnette
+  
+Miguelangel Soria Morelos: @miguelondigital
+  
+Moose Brown: @dol-onia
   
 ---
 
