@@ -1,15 +1,12 @@
-# CS 2640 - 12pm
-# Final Project - Sudoku in MIPS
+# PrintBoard.asm
+# Authors: Jeannette
+# CS2640.02 Assembly
 
-# Task: Print Sudoku Board + Menu
+# Print Sudoku Board
+# ============================================================================================
 
 .data
 	title: 		.asciiz "---------- Sudoku in MIPS ----------\n\n"
-	option: 	.asciiz "[1] Start Game \n[2] Choose Difficulty \n[3]Quit\n"
-	option_choice: 	.asciiz "Enter choice: \n"
-	row_value:	.asciiz "Enter row: \n"
-	col_value:	.asciiz "Enter column: \n"
-	cell_value:	.asciiz "Value: \n"
 	
 	board: 	.word 	5, 3, 0, 0, 7, 0, 0, 0, 0, 
 			6, 0, 0, 1, 9, 5, 0, 0, 0,
@@ -53,8 +50,6 @@
 main:
 	# Print menu
 	printf(title)
-	printf(option)
-	printf(newline)
 	
 	# Create the index/counter. 0
 	li $t0, 0
@@ -132,8 +127,8 @@ check_newline:
 	j check_row_seperator
 
 check_row_seperator:
-	#if index = 81($t1), end program to not get row seperator at bottom of board
-	beq $t0, $t1, user_input
+	#if index = 81($t1), end program
+	beq $t0, $t1, exit
 	
 	#If index/27 != 0, check for newline
 	li $t5, 27
@@ -145,10 +140,6 @@ check_row_seperator:
 	printf(row_seperator)
 	
 	j print_loop
-
-user_input:
-	printf(row_value)
-	printf(col_value)
-	printf(cell_value)
 	
+exit:
 	exit
