@@ -1,4 +1,4 @@
-# Authors: Alexander, Jeannnette, Moose, _
+# Authors: Alexander, Jeannnette, Moose, Miguel
 # CS2640.02 Assembly
 # 5/16/2025
 
