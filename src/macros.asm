@@ -1,4 +1,4 @@
-# Authors: Alexander, Jeannnette, Moose, _
+# Authors: Alexander, Jeannnette, Moose, Miguel
 # CS2640.02 Assembly
 # 5/16/2025
 
@@ -21,12 +21,13 @@ syscall
 
 .macro printInt(%num)
 li $v0, 1
-la $a0, %num
+move $a0, %num
 syscall
 .end_macro
 
 
 # Loops
+.text
 # takes an integer input from the user, checks that the input is between the bounds t0 < input < t1
 getInt:
 li $v0, 5

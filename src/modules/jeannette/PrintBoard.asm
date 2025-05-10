@@ -3,6 +3,12 @@
 
 # Task: Print Sudoku Board + Menu
 
+
+# global board assets
+.extern board 324
+.extern solution 324
+
+
 .data
 	title: 		.asciiz "---------- Sudoku in MIPS ----------\n\n"
 	option: 	.asciiz "[1] Start Game \n[2] Choose Difficulty \n[3]Quit\n"
@@ -11,20 +17,21 @@
 	col_value:	.asciiz "Enter column: \n"
 	cell_value:	.asciiz "Value: \n"
 	
-	board: 	.word 	5, 3, 0, 0, 7, 0, 0, 0, 0, 
-			6, 0, 0, 1, 9, 5, 0, 0, 0,
-			0, 9, 8, 0, 0, 0, 0, 6, 0,
-       			8, 0, 0, 0, 6, 0, 0, 0, 3,
-       			4, 0, 0, 8, 0, 3, 0, 0, 1,
-       			7, 0, 0, 0, 2, 0, 0, 0, 6,
-       			0, 6, 0, 0, 0, 0, 2, 8, 0,
-       			0, 0, 0, 4, 1, 9, 0, 0, 5,
-       			0, 0, 0, 0, 8, 0, 0, 7, 9
+#	board: 	.word 	5, 3, 0, 0, 7, 0, 0, 0, 0, 
+#			6, 0, 0, 1, 9, 5, 0, 0, 0,
+#			0, 9, 8, 0, 0, 0, 0, 6, 0,
+#      			8, 0, 0, 0, 6, 0, 0, 0, 3,
+#     			4, 0, 0, 8, 0, 3, 0, 0, 1,
+#    			7, 0, 0, 0, 2, 0, 0, 0, 6,
+#   			0, 6, 0, 0, 0, 0, 2, 8, 0,
+#  			0, 0, 0, 4, 1, 9, 0, 0, 5,
+# 			0, 0, 0, 0, 8, 0, 0, 7, 9
+
        	row_seperator: 	.asciiz "------+-------+------\n"
        	pipe:		.asciiz "| "
        	space:		.asciiz " "
        	newline:	.asciiz "\n"
-	dot:     	.asciiz "."
+	dot:     	.asciiz "_"
 
 # Reference:
 	# $t0 = index / counter
@@ -43,17 +50,19 @@
 
 # end program
 .macro exit
-	li $v0, 10
-	syscall
+#	li $v0, 10
+#	syscall
+	jr $ra
 .end_macro
 
 .text
-.globl main
+.globl print_userBoard
+#.globl print_solutionsBoard
 
-main:
+print_userBoard:
 	# Print menu
 	printf(title)
-	printf(option)
+#	printf(option)
 	printf(newline)
 	
 	# Create the index/counter. 0
@@ -65,6 +74,29 @@ main:
 	#Load the address of the board
 	la $t2, board
 	
+	#Start loop
+	j print_loop
+
+print_solutionBoard:
+	# Print menu
+	printf(title)
+#	printf(option)
+	printf(newline)
+	
+	# Create the index/counter. 0
+	li $t0, 0
+	
+	# Total cells in board = 81
+	li $t1, 81
+	
+	#Load the address of the board
+	la $t2, solution
+	
+	#Start loop
+	j print_loop
+
+
+	
 # Print board
 print_loop:
 
@@ -74,7 +106,7 @@ print_loop:
 	add $t2, $t2, 4 
 
 	
-	# If the cell value is equal to 0 (empty cell) Print a space
+	# If the cell value is equal to 0 (empty cell) Print an underscore
 	beqz $t4, print_dot
 	
 	# Otherwise just print the value($t4)

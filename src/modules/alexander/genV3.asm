@@ -15,7 +15,6 @@ imperfectMsg:  .asciiz "ERROR: Imperfect grid generated.\n"
 seedMsg:       .asciiz "Random seed: "
 
 .text
-.globl main
 
 main:
     # Initialize the random number generator with system time

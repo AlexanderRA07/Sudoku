@@ -1,5 +1,5 @@
 # Main File of Sudoku Project
-# Authors: Alexander, Jeannnette, Moose, _
+# Authors: Alexander, Jeannnette, Moose, Miguel
 # CS2640.02 Assembly
 # 5/16/2025
 
@@ -7,15 +7,35 @@
 # This file uses macros stored in a seperate local file: macros.asm
 # ============================================================================================
 
-.include macros.asm
+
+
+# grant access to macros
+.include "macros.asm"
+.include "./modules/alexander/presets.asm"
+.include "./modules/jeannette/PrintBoard.asm"
+
+
+#.include "./modules/jeannette/Sudoku_Update1.asm"
+
+
+# declare global asset(s)
+.globl main
 
 .data
+.globl board
+.globl solution
+
 dif: .asciiz "What difficulty level do you want? Easy (1), Medium (2), Hard (3) "
 type: .asciiz "Do you want a generated board (1) or a preset (2)? "
+board: .space 324
+solution: .space 324
+debug: .asciiz "checkpoint\n"
 
 
 .text
+
 main:
+print(debug)
 
 # get difficulty
 # What difficulty level do you want? Easy (1), Medium (2), Hard (3) 
@@ -26,8 +46,15 @@ li $t0, 1
 li $t1, 3
 
 # get input
+print(debug)
 jal getInt
 move $s1, $s0
+
+
+# branch to the correct preset filling
+beq $s1, 1, easy
+beq $s1, 2, medium
+beq $s1, 3, hard
 
 
 # get prefrence
@@ -40,4 +67,25 @@ li $t1, 2
 
 jal getInt
 move $s2, $s0
+
+
+# get boards
+easy:
+jal setEasy
+j play
+
+medium:
+jal setMedium
+j play
+
+hard:
+jal setHard
+j play
+
+
+# start playing the game
+play:
+
+jal print_userBoard
+
 
