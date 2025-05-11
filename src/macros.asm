@@ -7,9 +7,7 @@
 # ============================================================================================
 
 .data 
-wrong1: .asciiz "Wrong input, choose a value between "
-wrong2: .asciiz " and "
-enter: .asciiz "\n"
+
 
 # Macros
 # print a string arguement
@@ -19,29 +17,15 @@ la $a0, %str
 syscall
 .end_macro
 
+# print an int
 .macro printInt(%num)
 li $v0, 1
 move $a0, %num
 syscall
 .end_macro
 
-
-# Loops
-.text
-# takes an integer input from the user, checks that the input is between the bounds t0 < input < t1
-getInt:
-li $v0, 5
+# end program
+.macro exit
+la $v0, 10
 syscall
-blt $v0, $t0, wrongInput
-bgt $v0, $t1, wrongInput
-
-move $s0, $v0
-jr $ra
-
-wrongInput:
-print(wrong1)
-printInt($t0)
-print(wrong2)
-printInt($t1)
-print(enter)
-j getInt
+.end_macro
