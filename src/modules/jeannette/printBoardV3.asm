@@ -13,8 +13,8 @@
 	dot:           .asciiz "_"
 
 .text
-.globl print_userBoard
-.globl print_solutionBoard
+#.globl print_userBoard
+#.globl print_solutionBoard
 
 print_userBoard:
 	# Print title
@@ -132,10 +132,12 @@ next_row:
 	j print_row_loop
 	
 print_done:
-	# Print prompts for user input
+	# Print prompts for user input, then stores input
 	li $v0, 4
 	la $a0, row_value
 	syscall
+	
+	
 	
 	li $v0, 4
 	la $a0, col_value

@@ -1,13 +1,13 @@
-# Authors: Alexander, Jeannnette, Moose, Miguel
+# macros.asm
+
+# Secondary File of Sudoku Project
+# Authors of Project: Alexander, Jeannnette, Moose, Miguel
+# Author(s) of macros.asm: Alexander
 # CS2640.02 Assembly
 # 5/16/2025
 
-# This file is the core of the project, it will be the file which is executed to run the code. 
-# This file uses macros stored in a seperate local file: macros.asm
+# This file holds helper macros for the main.asm
 # ============================================================================================
-
-.data 
-
 
 # Macros
 # print a string arguement

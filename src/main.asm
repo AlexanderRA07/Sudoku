@@ -1,5 +1,8 @@
+# main.asm
+
 # Main File of Sudoku Project
-# Authors: Alexander, Jeannnette, Moose, Miguel
+# Authors of Project: Alexander, Jeannnette, Moose, Miguel
+# Author(s) of main.asm: Alexander
 # CS2640.02 Assembly
 # 5/16/2025
 
@@ -11,19 +14,13 @@
 
 # grant access to macros
 .include "macros.asm"
-#.include "./modules/alexander/presets.asm"
-#.include "./modules/jeannette/PrintBoard.asm"
 
-
-#.include "./modules/jeannette/Sudoku_Update1.asm"
-
-
-# declare global asset(s)
+# declare global function
 .globl main
 
 
 .data
-
+# declare the board as a global variable
 .globl board
 .globl solution
 
@@ -33,13 +30,13 @@ type: .asciiz "Do you want a generated board (1) or a preset (2)? "
 board: .space 324
 .align 2
 solution: .space 324
-debug: .asciiz "checkpoint\n"
+debug: .asciiz "checkpoint\n" # for debugging purposes
 wrong1: .asciiz "Wrong input, choose a value between "
 wrong2: .asciiz " and "
 enter: .asciiz "\n"
 
-.text
 
+.text
 main:
 # print(debug)
 
@@ -62,7 +59,7 @@ beq $s1, 1, easy
 beq $s1, 2, medium
 beq $s1, 3, hard
 
-
+# Getting Prefrence is a scrapped idea, we wanted to be able to generate random boards
 # get prefrence
 # Do you want a generated board (1) or a preset (2)?
 print(type)
@@ -92,16 +89,27 @@ j play
 # start playing the game
 play:
 
+# Present the User Board
+# Gets User Input as s5, Row as s7, Column as s6
 jal print_userBoard
-jal print_solutionBoard
+
+# Update User Board
+jal update_board
+
+# If the solution is found, exit. Else, continue to play
 
 
+
+
+
+# For Debuging, print solutions
+#jal print_solutionBoard
 exit
 
 
 
 
-# Functions
+# Helper Functions
 # takes an integer input from the user, checks that the input is between the bounds t0 < input < t1
 getInt:
 li $v0, 5

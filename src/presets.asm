@@ -1,6 +1,14 @@
-# Alexander Albert
+# presets.asm
+
+# Board Storage File of Sudoku Project
+# Authors of Project: Alexander, Jeannnette, Moose, Miguel
+# Author(s) of presets.asm: Alexander
+# CS2640.02 Assembly
+# 5/16/2025
+
 # This file holds three base presets, one for easy, medium, and hard.
 # 0 denotes an 'empty' space, this will be converted into _ when printing
+# ============================================================================================
 
 
 # access external refrences
@@ -109,6 +117,7 @@ hardBoard: .word 2,4,1, 7,5,3, 8,6,9,
 .globl setHard
 
 setEasy:
+# load boards and global equivalents
 la $t1, easyBoard
 la $t2, solution
 
@@ -119,6 +128,7 @@ j copy
 return
 
 setMedium:
+# load boards and global equivalents
 la $t1, mediumBoard
 la $t2, solution
 
@@ -129,6 +139,7 @@ j copy
 return
 
 setHard:
+# load boards and global equivalents
 la $t1, hardBoard
 la $t2, solution
 
