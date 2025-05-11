@@ -1,5 +1,6 @@
 # Simplified Sudoku Board Printing Function
 .extern board 324
+.extern solution 324
 .data
 	title:         .asciiz "---------- Sudoku in MIPS ----------\n\n"
 	row_value:     .asciiz "Enter row: \n"
@@ -9,10 +10,11 @@
 	pipe:          .asciiz "| "
 	space:         .asciiz " "
 	newline:       .asciiz "\n"
-	dot:           .asciiz "*"
+	dot:           .asciiz "_"
 
 .text
 .globl print_userBoard
+.globl print_solutionBoard
 
 print_userBoard:
 	# Print title
@@ -25,6 +27,24 @@ print_userBoard:
 	
 	# Initialize row and column counters
 	li $s1, 0    # row counter (0-8)
+	
+	j print_row_loop
+	
+	
+print_solutionBoard:
+	# Print title
+	li $v0, 4
+	la $a0, title
+	syscall
+	
+	# Load board address
+	la $s0, solution
+	
+	# Initialize row and column counters
+	li $s1, 0    # row counter (0-8)
+	
+	j print_row_loop
+	
 	
 print_row_loop:
 	# Check if we've printed all rows

@@ -93,8 +93,7 @@ j play
 play:
 
 jal print_userBoard
-
-
+jal print_solutionBoard
 
 
 exit
