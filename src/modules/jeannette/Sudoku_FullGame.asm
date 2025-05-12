@@ -22,8 +22,9 @@
 	cell_value:	.asciiz "Value: "
 	
 	# Valid input prompts
-	invalid:	.asciiz "Your input is invalid, please enter a number from 1-9"
-	taken: 		.asciiz "Cell is taken, select a cell that was not taken."
+	invalid:	.asciiz "Your input is invalid, please enter a number from 1-9\n"
+	taken: 		.asciiz "Cell is taken, select a cell that was not taken.\n"
+	invalidMenu:    .asciiz "Your input is invalid, please enter an option from the menu!\n"
 	
 	# Check win prompts
 	continueOrEnd:	.asciiz "The board is full, would you like to check for a win?\n[1] Yes\n[Any other number] Not yet. Continue Game\nEnter choice: "
@@ -86,6 +87,9 @@ main:
 	beq $t0, 2, exit
 	
 	printf(newline)
+	# Only runs if there is an incorrect value entered in first menu
+	printf(invalidMenu)
+	j main
 
 # ======================================================================
 # CHOOSE DIFFICULTY
@@ -95,8 +99,6 @@ difficulty_choice:
 	printf(difficulty)
 	getInput($s7)
 	
-	blt $s7, 0, invalid_input
-	bgt $s7, 3, invalid_input
 	
 	# Test Run
 	# Load the address of the board
@@ -116,6 +118,10 @@ difficulty_choice:
 	# Hard
 	la $t4, playingHARD
 	beq $s7, 3, load_board
+	
+	# Invalid input handling
+	printf(invalidMenu)
+	j difficulty_choice
 
 load_board:
 	# Create the index/counter. 0
