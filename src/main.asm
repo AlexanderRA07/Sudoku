@@ -34,6 +34,9 @@ debug: .asciiz "checkpoint\n" # for debugging purposes
 wrong1: .asciiz "Wrong input, choose a value between "
 wrong2: .asciiz " and "
 enter: .asciiz "\n"
+promptEnd: .asciiz "Would you like to end the game? Yes (1) No (0) "
+winner: .asciiz "You win"
+looser: .asciiz "You lose"
 
 
 .text
@@ -93,23 +96,73 @@ play:
 # Gets User Input as s5, Row as s7, Column as s6
 jal print_userBoard
 
-# Update User Board
-jal update_board
-
-# If the solution is found, exit. Else, continue to play
-
-
-
-
-
 # For Debuging, print solutions
 #jal print_solutionBoard
-exit
+
+
+
+# Update User Board
+#jal update_board
+
+# reduce row and column to valid numbers
+subi $s7, $s7, 1
+subi $s6, $s6, 1
+
+# element = row * 9 + column
+li $t3, 9
+mul $t9, $s7, $t3
+add $t9, $t9, $s6
+
+# replace array element with user input 
+la $t2, board		# load array
+li $t3, 4
+mul $t9, $t9, $t3	# multiply index by 4 for .word
+add $t2, $t2, $t9	# add index to base address to get location of memory of node
+
+sw $s5, 0($t2)		# store data
+
+
+# Ask the user if he or she wants to end the game now, answer is in s4
+# if s4 = 1, winner. if s4 = 0, looser
+print(promptEnd)
+li $t0, 0
+li $t1, 1
+jal getInt
+
+#print(debug)
+
+beq $s0, 1, finished
+beqz $s0, play
+
+
+# User inputs are finished, time to check win or loss
+finished:
+#print(debug)
+jal victory
+#print(debug)
+beq $s4, 1, win
+beqz $s4, loose
+
+
+win:
+print(winner)
+j end
+
+loose:
+#print(debug)
+print(looser)
+j end
+
+
 
 
 
 
 # Helper Functions
+# end program
+end:
+exit
+
 # takes an integer input from the user, checks that the input is between the bounds t0 < input < t1
 getInt:
 li $v0, 5
